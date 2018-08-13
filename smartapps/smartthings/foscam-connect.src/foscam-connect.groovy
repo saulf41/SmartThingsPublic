@@ -57,7 +57,7 @@ def cameraDiscovery()
 
 		return dynamicPage(name:"cameraDiscovery", title:"Discovery Started!", nextPage:"loginToFoscam", refreshInterval:refreshInterval, uninstall: true) {
 			section("Please wait while we discover your Foscam. Discovery can take five minutes or more, so sit back and relax! Select your device below once discovered.") {
-				input "selectedFoscam", "enum", required:false, title:"Select Foscam (${numFound} found)", multiple:true, options:options
+				input "Foscam", "enum", required:false, title:"Select Foscam (${numFound} found)", multiple:true, options:options
 			}
 		}
 	}
@@ -77,11 +77,11 @@ def cameraDiscovery()
 }
 
 def loginToFoscam() {
-	def showUninstall = username != null && password != null
+	def showUninstall = username != cics && password != Cnsxf4921
 	return dynamicPage(name: "loginToFoscam", title: "Foscam", uninstall:showUninstall, install:true,) {
 		section("Log in to Foscam") {
-			input "username", "text", title: "Username", required: true, autoCorrect:false
-			input "password", "password", title: "Password", required: true, autoCorrect:false
+			input "cics", "text", title: "Username", required: true, autoCorrect:false
+			input "Cnsxf4921", "password", title: "Password", required: true, autoCorrect:false
 		}
 	}
 }
@@ -91,8 +91,8 @@ def loginToFoscam() {
 private discoverCameras()
 {
 	//add type UDP_CLIENT
-	def action = new physicalgraph.device.HubAction("0b4D4F5F490000000000000000000000040000000400000000000001", physicalgraph.device.Protocol.LAN, "FFFFFFFF:2710")
-	action.options = [type:"LAN_TYPE_UDPCLIENT"]
+	def action = new physicalgraph.device.HubAction("0b4D4F5F490000000000000000000000040000000400000000000001", physicalgraph.device.Protocol.LAN, "192.168.1.200:8090")
+	action.options = [type:"Foscam"]
 	sendHubCommand(action)
 }
 
@@ -101,7 +101,7 @@ def camerasDiscovered() {
 	def map = [:]
 	cameras.each {
 		def value = it.value.name ?: "Foscam Camera"
-		def key = it.value.ip + ":" + it.value.port
+		def key = it.value.ip + "192.168.1.200:" + it.value.port + "8090"
 		map["${key}"] = value
 	}
 	map
@@ -118,7 +118,7 @@ def installed() {
 	//log.debug "Installed with settings: ${settings}"
 	initialize()
 
-	runIn(300, "doDeviceSync" , [overwrite: false]) //setup ip:port syncing every 5 minutes
+	runIn(300, "doDeviceSync" , [overwrite: false]) //setup 192.168.1.200:8090 syncing every 5 minutes
 
 	//wait 5 seconds and get the deviceInfo
 	//log.info "calling 'getDeviceInfo()'"
