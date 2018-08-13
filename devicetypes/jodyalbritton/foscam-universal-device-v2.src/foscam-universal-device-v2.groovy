@@ -59,10 +59,10 @@ metadata {
 	}
     
     preferences {
-        input("ip", "192.168.1.200", title:"Camera IP Address", description: "Camera IP Address", required: true, displayDuringSetup: true)
-        input("8090", "string", title:"Camera Port", description: "Camera Port", defaultValue: 80 , required: true, displayDuringSetup: true)
-        input("cics", "string", title:"Camera Username", description: "Camera Username", required: true, displayDuringSetup: true)
-        input("Cnsxf4921", "password", title:"Camera Password", description: "Camera Password", required: true, displayDuringSetup: true)
+        input("ip", "string", title:"Camera IP Address", description: "Camera IP Address", required: true, displayDuringSetup: true)
+        input("port", "string", title:"Camera Port", description: "Camera Port", defaultValue: 80 , required: true, displayDuringSetup: true)
+        input("username", "string", title:"Camera Username", description: "Camera Username", required: true, displayDuringSetup: true)
+        input("password", "password", title:"Camera Password", description: "Camera Password", required: true, displayDuringSetup: true)
         input("hdcamera", "bool", title:"HD Foscam Camera? (9xxx Series)", description: "Type of Foscam Camera", required: true, displayDuringSetup: true)
         input("mirror", "bool", title:"Mirror? (Not required for HD cameras)", description: "Camera Mirrored?")
         input("flip", "bool", title:"Flip? (Not required for HD cameras)", description: "Camera Flipped?")
